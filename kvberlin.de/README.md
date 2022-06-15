@@ -2,6 +2,10 @@
 
 [Link](https://www.kvberlin.de/fuer-patienten/arzt-und-psychotherapeutensuche)
 
+## Script
+
+[Link](./src/index.js)
+
 ## Enhancements
 
 - hide therapists without numbers
