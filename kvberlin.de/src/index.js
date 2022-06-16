@@ -31,9 +31,11 @@ document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
     }
   });
 
-  if(officeHoursAvailable) {
+  if(phoneNumber && officeHoursAvailable) {
     if(officeHoursLink.closest(".p-accordion-header-link").querySelector('.pi-chevron-right'))
       officeHoursLink.click();
+
+    phoneNumber.style.backgroundColor = "bisque";
 
     officeHourDay.style.backgroundColor = "antiquewhite";
 
