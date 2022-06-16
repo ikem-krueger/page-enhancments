@@ -1,13 +1,12 @@
 document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
   const days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
 
+  const date = new Date();
+  
   const weekday = days[date.getDay()];
 
   /*
-  const date = new Date();
-  
   let now = date.getTime();
-
   let start = date.setHours(10, 10);
   let end = date.setHours(10, 50);
   */
