@@ -4,7 +4,7 @@ document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
   const date = new Date();
   
   const weekday = days[date.getDay()];
- 
+
   const tel = result.querySelector(".tel");
 
   let sprechzeiten;
@@ -25,16 +25,27 @@ document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
 
   if(sprechzeitenToday) {
     sprechzeitenToday.querySelectorAll(".typ").forEach((typ) => {
-      if(typ.innerText === "Telefonische Erreichbarkeit")
+      if(typ.innerText === "Telefonische Erreichbarkeit") {
         erreichbarkeit = typ.closest("tr");
+        
+    		erreichbarkeit.style = "background-color: bisque;";
+      }
+    
+    sprechzeitenToday.style = "background-color: antiquewhite;";
     });
   }
  
   if(tel && sprechzeiten && erreichbarkeit) {
-    sprechzeiten.click();
+    if(sprechzeiten.closest(".p-accordion-header-link").querySelector('.pi-chevron-right'))
+      sprechzeiten.click();
 
-    sprechzeitenToday.style = "background-color: antiquewhite;";
-    erreichbarkeit.style = "background-color: bisque;";
+    /*
+    let now = date.getTime();
+    let start = date.setHours(10, 10);
+    let end = date.setHours(10, 50);
+
+    console.debug(erreichbarkeit.closest(".hourstable").querySelector(".hours").innerText);
+    */
   } else {
     result.style = "display: none;";
   }
