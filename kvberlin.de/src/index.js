@@ -1,59 +1,55 @@
 document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
-  result.style = "filter: saturate(0);"
-  
-  const days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+  result.style.filter = "saturate(0%)";
 
   const date = new Date();
-  
-  const weekday = days[date.getDay()];
+  const weekdays = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+  const today = weekdays[date.getDay()];
 
-  const tel = result.querySelector(".tel");
+  const phoneNumber = result.querySelector(".tel");
 
-  let sprechzeiten;
-  
+  let officeHoursLink;
+
   result.querySelectorAll(".p-accordion-header-text").forEach((accordion) => {
-    if(accordion.innerText === "Sprechzeiten")
-      sprechzeiten = accordion;
+    if(accordion.innerText == "Sprechzeiten")
+      officeHoursLink = accordion
   });
-  
-  let sprechzeitenToday;
-  
+
+  let officeHourDay;
+
   result.querySelectorAll(".day").forEach((day) => {
-    if(day.innerText === weekday)
-      sprechzeitenToday = day.closest("tr");
+    if(day.innerText == today)
+      officeHourDay = day.closest("tr");
   });
 
-  let erreichbarkeit;
+  let officeHoursAvailable;
 
-  if(sprechzeitenToday) {
-    sprechzeitenToday.querySelectorAll(".typ").forEach((typ) => {
-      if(typ.innerText === "Telefonische Erreichbarkeit" || typ.innerText === "Sprechzeiten") {
-        erreichbarkeit = typ.closest("tr");
-        
-        erreichbarkeit.style = "background-color: bisque;";
-        
-        const hours = erreichbarkeit.querySelector(".hours");
-        
-        const [vonStunde, vonMinute, bisStunde, bisMinute] = hours.innerText.match(/(\d+):(\d+) - (\d+):(\d+)/).slice(1)
+  officeHourDay?.querySelectorAll(".typ").forEach((typ) => {
+    if(typ.innerText == "Sprechzeiten" || typ.innerText == "Telefonische Erreichbarkeit") {
+      officeHoursAvailable = typ.closest("tr");
 
-        let von = new Date();
-        let bis = new Date();
-        
-        von.setHours(vonStunde, vonMinute);
-        bis.setHours(bisStunde, bisMinute);
-        
-        if(date.getTime() >= von.getTime() && date.getTime() <= bis.getTime())
-          result.style = "filter: saturate(1);";
-      }
-    
-    sprechzeitenToday.style = "background-color: antiquewhite;";
-    });
-  }
- 
-  if(tel && sprechzeiten && erreichbarkeit) {
-    if(sprechzeiten.closest(".p-accordion-header-link").querySelector('.pi-chevron-right'))
-      sprechzeiten.click();
+      officeHoursAvailable.style.backgroundColor = "bisque";
+    }
+  });
+
+  if(officeHoursAvailable) {
+    if(officeHoursLink.closest(".p-accordion-header-link").querySelector('.pi-chevron-right'))
+      officeHoursLink.click();
+
+    officeHourDay.style.backgroundColor = "antiquewhite";
+
+    const officeHours = officeHoursAvailable.querySelector(".hours");
+
+    const [fromHour, fromMinute, toHour, toMinute] = officeHours.innerText.match(/(\d+):(\d+) - (\d+):(\d+)/).slice(1)
+
+    let from = new Date();
+    let to = new Date();
+
+    from.setHours(fromHour, fromMinute);
+    to.setHours(toHour, toMinute);
+
+    if(date.getTime() >= from.getTime() && date.getTime() <= to.getTime())
+      result.style.filter = "saturate(100%)";
   } else {
-    result.style = "display: none;";
+    result.style.display = "none";
   }
 });
