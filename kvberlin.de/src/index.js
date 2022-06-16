@@ -4,13 +4,7 @@ document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
   const date = new Date();
   
   const weekday = days[date.getDay()];
-
-  /*
-  let now = date.getTime();
-  let start = date.setHours(10, 10);
-  let end = date.setHours(10, 50);
-  */
-  
+ 
   const tel = result.querySelector(".tel");
 
   let sprechzeiten;
@@ -41,8 +35,6 @@ document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
 
     sprechzeitenToday.style = "background-color: antiquewhite;";
     erreichbarkeit.style = "background-color: bisque;";
-    
-    console.debug(erreichbarkeit.closest(".hourstable").querySelector(".hours").innerText);
   } else {
     result.style = "display: none;";
   }
