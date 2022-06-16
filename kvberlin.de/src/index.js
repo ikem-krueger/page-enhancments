@@ -28,7 +28,7 @@ document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
       if(typ.innerText === "Telefonische Erreichbarkeit") {
         erreichbarkeit = typ.closest("tr");
         
-    		erreichbarkeit.style = "background-color: bisque;";
+        erreichbarkeit.style = "background-color: bisque;";
       }
     
     sprechzeitenToday.style = "background-color: antiquewhite;";
