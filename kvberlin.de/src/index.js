@@ -51,8 +51,6 @@ document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
   }
  
   if(tel && sprechzeiten && erreichbarkeit) {
-    console.debug(sprechzeiten)
-
     if(sprechzeiten.closest(".p-accordion-header-link").querySelector('.pi-chevron-right'))
       sprechzeiten.click();
   } else {
