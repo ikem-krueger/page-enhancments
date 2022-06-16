@@ -31,7 +31,7 @@ document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
         erreichbarkeit.style = "background-color: bisque;";
       }
     
-    sprechzeitenToday.style = "background-color: antiquewhite;";
+      sprechzeitenToday.style = "background-color: antiquewhite;";
     });
   }
  
