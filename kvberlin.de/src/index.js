@@ -25,7 +25,7 @@ document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
 
   officeHourDay?.querySelectorAll(".typ").forEach((type) => {
     if(type.innerText == "Sprechzeiten" || type.innerText == "Telefonische Erreichbarkeit") {
-      officeHoursAvailable = typ.closest("tr");
+      officeHoursAvailable = type.closest("tr");
 
       officeHoursAvailable.style.backgroundColor = "bisque";
     }
