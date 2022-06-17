@@ -23,8 +23,8 @@ document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
 
   let officeHoursAvailable;
 
-  officeHourDay?.querySelectorAll(".typ").forEach((typ) => {
-    if(typ.innerText == "Sprechzeiten" || typ.innerText == "Telefonische Erreichbarkeit") {
+  officeHourDay?.querySelectorAll(".typ").forEach((type) => {
+    if(type.innerText == "Sprechzeiten" || type.innerText == "Telefonische Erreichbarkeit") {
       officeHoursAvailable = typ.closest("tr");
 
       officeHoursAvailable.style.backgroundColor = "bisque";
