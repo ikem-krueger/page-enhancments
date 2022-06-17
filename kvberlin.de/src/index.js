@@ -10,21 +10,21 @@ document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
   let officeHoursLink;
 
   result.querySelectorAll(".p-accordion-header-text").forEach((accordion) => {
-    if(accordion.innerText == "Sprechzeiten")
+    if(accordion.textContent == "Sprechzeiten")
       officeHoursLink = accordion
   });
 
   let officeHourDay;
 
   result.querySelectorAll(".day").forEach((day) => {
-    if(day.innerText == today)
+    if(day.textContent == today)
       officeHourDay = day.closest("tr");
   });
 
   let officeHoursAvailable;
 
   officeHourDay?.querySelectorAll(".typ").forEach((type) => {
-    if(type.innerText == "Sprechzeiten" || type.innerText == "Telefonische Erreichbarkeit") {
+    if(type.textContent == "Sprechzeiten" || type.textContent == "Telefonische Erreichbarkeit") {
       officeHoursAvailable = type.closest("tr");
 
       officeHoursAvailable.style.backgroundColor = "bisque";
@@ -41,7 +41,7 @@ document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
 
     const officeHours = officeHoursAvailable.querySelector(".hours");
 
-    const [fromHour, fromMinute, toHour, toMinute] = officeHours.innerText.match(/(\d+):(\d+) - (\d+):(\d+)/).slice(1)
+    const [fromHour, fromMinute, toHour, toMinute] = officeHours.textContent.match(/(\d+):(\d+) - (\d+):(\d+)/).slice(1)
 
     let from = new Date();
     let to = new Date();
