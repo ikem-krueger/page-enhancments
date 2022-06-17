@@ -51,7 +51,6 @@ document.querySelectorAll(".arztsuche_results .docob").forEach((result) => {
 
     if(date.getTime() >= from.getTime() && date.getTime() <= to.getTime())
       result.style.filter = "saturate(100%)";
-  } else {
-    result.style.display = "none";
-  }
+    else
+      result.style.display = "none";
 });
