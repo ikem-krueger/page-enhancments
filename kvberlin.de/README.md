@@ -11,12 +11,5 @@
 - hide therapists without numbers
 - expand "Sprechzeiten"
 - highlight current day
-- highlight "Telefonische Erreichbarkeit"
-
-## Future Enchancements
-
+- highlight "Sprechzeiten" and "Telefonische Erreichbarkeit"
 - highlight current time window
-
-## Bugs
-
-- "Sprechzeiten" will be collapsed when the script is run the second time
