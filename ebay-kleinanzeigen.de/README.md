@@ -8,4 +8,4 @@
 
 ## Features
 
-Entfernte alle verkauften Artikel von der Merkliste.
+Entfernt alle verkauften Artikel von der Merkliste.
