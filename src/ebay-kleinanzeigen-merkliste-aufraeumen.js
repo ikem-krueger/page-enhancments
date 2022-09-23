@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  Entfernt alle verkauften Artikel von der Merkliste.
-// @author       Ikem Krueger
+// @author       Ikem Krueger <ikem.krueger@gmail.com>
 // @match        https://www.ebay-kleinanzeigen.de/m-merkliste.html
 // @grant        none
 // ==/UserScript==
