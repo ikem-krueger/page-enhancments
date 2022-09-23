@@ -1,4 +1,4 @@
-# Arzt- und Psychotherapeutensuche der KV Berlin
+# KV Berlin Arzt- und Psychotherapeutensuche
 
 [Link](https://www.kvberlin.de/fuer-patienten/arzt-und-psychotherapeutensuche)
 
@@ -6,10 +6,10 @@
 
 [Link](./src/index.js)
 
-## Enhancements
+## Features
 
-- hide therapists without numbers
-- expand "Sprechzeiten"
-- highlight current day
-- highlight "Sprechzeiten" and "Telefonische Erreichbarkeit"
-- highlight current time window
+- Therapeuten ohne Telefonnumer werden versteckt
+- "Sprechzeiten" werden aufgeklappt
+- aktueller Tag wird in den Sprechzeiten hervorgehoben
+- "Sprechzeiten" und "Telefonische Erreichbarkeit" wird hervorgehoben
+- akutelles Zeitfenster wird hervorgehoben
