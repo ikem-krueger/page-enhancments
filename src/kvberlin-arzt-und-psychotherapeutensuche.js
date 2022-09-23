@@ -2,7 +2,7 @@
 // @name         Kassenärztlich Vereinigung Berlin Arzt- und Psychotherapeutensuche
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  Versteckt Therapeuten ohne Telefonnumer; hebt die aktuellen Sprechzeiten hervor
+// @description  Versteckt Therapeuten ohne Telefonnummer; hebt die aktuellen Sprechzeiten hervor
 // @author       Ikem Krueger <ikem.krueger@gmail.com>
 // @match        https://www.kvberlin.de/fuer-patienten/arzt-und-psychotherapeutensuche
 // @grant        none
