@@ -1,4 +1,4 @@
-# KV Berlin Arzt- und Psychotherapeutensuche
+# KV Berlin - Arzt- und Psychotherapeutensuche
 
 [Link](https://www.kvberlin.de/fuer-patienten/arzt-und-psychotherapeutensuche)
 
