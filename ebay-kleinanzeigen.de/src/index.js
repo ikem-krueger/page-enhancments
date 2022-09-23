@@ -9,7 +9,7 @@
 // ==/UserScript==
 
 (function() {
- 'use strict';
+  'use strict';
 
   document.querySelectorAll(".ad-deleted").forEach((n, i) => {
     setTimeout(() => {
