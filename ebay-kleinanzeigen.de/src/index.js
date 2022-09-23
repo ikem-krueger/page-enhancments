@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         eBay Kleinanzeigen
+// @name         eBay Kleinanzeigen Merkliste aufräumen
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  Entfernt alle verkauften Artikel von der Merkliste.
