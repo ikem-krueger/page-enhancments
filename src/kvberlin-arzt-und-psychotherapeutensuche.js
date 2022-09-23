@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Kassenärztlich Vereinigung Berlin Arzt und Psychotherapeutensuche
+// @name         Kassenärztlich Vereinigung Berlin Arzt- und Psychotherapeutensuche
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  Versteckt Therapeuten ohne Telefonnumer; hebt die aktuellen Sprechzeiten hervor
