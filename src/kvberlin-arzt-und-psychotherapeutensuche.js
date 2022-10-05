@@ -66,5 +66,6 @@
         result.style.filter = "saturate(100%)";
       else
         result.style.display = "none";
+    }
   });
 })();
