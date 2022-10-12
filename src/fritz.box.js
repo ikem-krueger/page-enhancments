@@ -1,24 +1,33 @@
-const downstream_docsis_3_0_table = document.querySelectorAll(".flexTableBody")[1];
-
-const dbmvClass = {
-  BAD: "#FF0000",
-  MEDIUM: "#FFF200",
-  GOOD: "#00FF00"
+var einstufung = {
+  SOFORTIGE_BESEITIGUNG: "#FF0000",
+  BESEITIGUNG_BINNEN_MONATSFRIST: "#FFF200",
+  TOLERIERTE_ABWEICHUNG: "#00FF00",
+  REGELKONFORM: "#00FF00"
 }
 
-downstream_docsis_3_0_table.querySelectorAll('[prefid="powerLevel"]').forEach((dbmv_cell) => {
-  const row = dbmv_cell.closest(".flexRow");
+// Empfangsrichtung
+var DsDocsis31Table = document.querySelector("#uiContainerDsDocsis31Table");
+var DsDocsis30Table = document.querySelector("#uiContainerDsDocsis30Table");
 
-  const dbmv = parseFloat(dbmv_cell.textContent);
-  let backgroundColor = dbmvClass.BAD;
+// DOCSIS 2.0 / 3.0
+DsDocsis30Table.querySelector(".flexTableBody").querySelectorAll(".flexRow").forEach((row) => {
+  const [ kanal, kanalId, typ, frequenz, powerLevel, mse, latenz, korrigierbareFehler, nichtKorrigierbareFehler ] = row.childNodes;
 
-  if(dbmv >= -15 && dbmv <= 15) {
-    backgroundColor = dbmvClass.MEDIUM;
+  const pegel = parseFloat(powerLevel.textContent);
+
+  let hintergrundfarbe = einstufung.SOFORTIGE_BESEITIGUNG;
+
+  if(pegel >= -15 && pegel <= 15) {
+    hintergrundfarbe = einstufung.BESEITIGUNG_BINNEN_MONATSFRIST;
   }
 
-  if(dbmv >= -8 && dbmv <= 8) {
-    backgroundColor = dbmvClass.GOOD;
+  if(pegel >= -8 && pegel <= 8) {
+    hintergrundfarbe = einstufung.TOLERIERTE_ABWEICHUNG;
   }
 
-  row.style.backgroundColor = backgroundColor;
+  row.style.backgroundColor = hintergrundfarbe;
 });
+
+// Senderichtung
+var UsDocsis31Table = document.querySelector("#uiContainerUsDocsis31Table");
+var UsDocsis30Table = document.querySelector("#uiContainerUsDocsis30Table");
