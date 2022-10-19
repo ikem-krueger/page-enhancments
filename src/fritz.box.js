@@ -1,59 +1,49 @@
-function inRange(testval, min, max) {
-  return min <= testval && testval <= max;
+const BACKGROUND_COLORS = {
+  "Sofortige Beseitigung": "#FF0000",
+  "Beseitigung binnen Monatsfrist": "#FFF200",
+  "Tolerierte Abweichung": "#00FF00",
+  "Regel- / Vorgabekonform": "#00FF00"
 }
 
-var einstufung = {
-  SOFORTIGE_BESEITIGUNG: "#FF0000",
-  BESEITIGUNG_BINNEN_MONATSFRIST: "#FFF200",
-  TOLERIERTE_ABWEICHUNG: "#00FF00",
-  REGELKONFORM: "#00FF00"
+const CLASSIFICATION_LEVEL = ["Sofortige Beseitigung", "Beseitigung binnen Monatsfrist", "Tolerierte Abweichung", "Regel- / Vorgabekonform", "Tolerierte Abweichung", "Beseitigung binnen Monatsfrist", "Sofortige Beseitigung"];
+
+const RECEIVING_LEVEL = {
+  "64QAM": [[-60.0, -14.0], [-13.9, -12.0], [-11.9, -10.0], [-9.9, 7.0], [7.1, 12.0], [12.1, 14.0], [14.1, 60.0]],
+  "256QAM": [[-60.0, -8.0], [-7.9, -6.0], [-5.9, -4.0], [-3.9, 13.0], [13.1, 18.0], [18.1, 20.0], [20.1, 60.0]],
+  "1K": [[-60.0, -6.0], [-5.9, -4.0], [-3.9, -2.0], [-1.9, 15.0], [15.1, 20.0], [20.1, 22.0], [22.1, 60.0]],
+  "2K": [[-60.0, -4.0], [-3.9, -2.0], [-1.9, 0.0], [0.1, 17.0], [17.1, 22.0], [22.1, 24.0], [24.1, 60.0]],
+  "4K": [[-60.0, -2.0], [-1.9, 0.0], [0.1, 2.0], [2.1, 19.0], [19.1, 24.0], [24.1, 26.0], [26.1, 60.0]]
 }
 
-// Empfangsrichtung
-var DsDocsis31Table = document.querySelector("#uiContainerDsDocsis31Table");
-var DsDocsis30Table = document.querySelector("#uiContainerDsDocsis30Table");
+const TRANSMISSION_LEVEL = {
+  "64QAM": [[-60.0, 35.0], [35.1, 37.0], [37.1, 41.0], [41.1, 47.0], [47.1, 51.0], [51.1, 53.0], [53.1, 60.0]],
+  "4K": [[-60.0, 38.0], [38.1, 40.0], [40.1, 44.0], [44.1, 47.0], [47.1, 48.0], [48.1, 50.0], [50.1, 60.0]]
+}
 
-// DOCSIS 2.0 / 3.0
+function inRange(value, range) {
+  const [min, max] = range;
+
+  return min <= value && value <= max;
+}
+
+const DsDocsis30Table = document.querySelector("#uiContainerDsDocsis30Table");
+
 DsDocsis30Table.querySelector(".flexTableBody").querySelectorAll(".flexRow").forEach((row) => {
   const [ kanal, kanalId, typ, frequenz, powerLevel, mse, latenz, korrigierbareFehler, nichtKorrigierbareFehler ] = row.childNodes;
 
-  const pegel = parseFloat(powerLevel.textContent);
+  let _powerLevel = parseFloat(powerLevel.textContent);
+  let classification;
+  let backgroundColor;
 
-  let hintergrundfarbe;
+  RECEIVING_LEVEL[typ.textContent].forEach((range, index) => {
+    if(inRange(_powerLevel, range)) {
+      classification = CLASSIFICATION_LEVEL[index];
 
-  if(typ.textContent == "64QAM") {
-    if(inRange(pegel, -60.0, -14.0)) {
-      hintergrundfarbe = einstufung.SOFORTIGE_BESEITIGUNG;
+      return;
     }
+  });
 
-    if(inRange(pegel, -13.9, -12.0)) {
-      hintergrundfarbe = einstufung.BESEITIGUNG_BINNEN_MONATSFRIST;
-    }
+  console.debug(classification);
 
-    if(inRange(pegel, -11.9, -10.0)) {
-      hintergrundfarbe = einstufung.TOLERIERTE_ABWEICHUNG;
-    }
-
-    if(inRange(pegel, -9.9, 7.0)) {
-      hintergrundfarbe = einstufung.REGELKONFORM;
-    }
-
-    if(inRange(pegel, 7.1, 12.0)) {
-      hintergrundfarbe = einstufung.TOLERIERTE_ABWEICHUNG;
-    }
-
-    if(inRange(pegel, 12.1, 14.0)) {
-      hintergrundfarbe = einstufung.BESEITIGUNG_BINNEN_MONATSFRIST;
-    }
-
-    if(inRange(pegel, 14.1, 60)) {
-      hintergrundfarbe = einstufung.SOFORTIGE_BESEITIGUNG;
-    }
-  }
-
-  row.style.backgroundColor = hintergrundfarbe;
+  powerLevel.style.color = BACKGROUND_COLORS[classification];
 });
-
-// Senderichtung
-var UsDocsis31Table = document.querySelector("#uiContainerUsDocsis31Table");
-var UsDocsis30Table = document.querySelector("#uiContainerUsDocsis30Table");
