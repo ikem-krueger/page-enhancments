@@ -26,23 +26,22 @@ function inRange(value, range) {
   return min <= value && value <= max;
 }
 
-function foo(bar, baz) {
-  bar.querySelector(".flexTableBody").querySelectorAll(".flexRow").forEach((row) => {
-    const [ kanal, kanalId, typ, frequenz, powerLevel, mse, latenz, korrigierbareFehler, nichtKorrigierbareFehler ] = row.childNodes;
+function colorizePowerLevel(table, level) {
+  table.querySelector(".flexTableBody").querySelectorAll(".flexRow").forEach((row) => {
+    const childNodes = row.childNodes;
 
-    let _powerLevel = parseFloat(powerLevel.textContent);
+    const typ = childNodes[2];
+    const powerLevel = childNodes[4];
+
     let classification;
-    let backgroundColor;
 
-    baz[typ.textContent].forEach((range, index) => {
-      if(inRange(_powerLevel, range)) {
+    level[typ.textContent].forEach((range, index) => {
+      if(inRange(parseFloat(powerLevel.textContent), range)) {
         classification = CLASSIFICATION_LEVEL[index];
 
         return;
       }
     });
-
-    //console.debug(classification);
 
     powerLevel.style.color = COLORS[classification];
   });
@@ -53,7 +52,7 @@ const DsDocsis30Table = document.querySelector("#uiContainerDsDocsis30Table");
 const UsDocsis31Table = document.querySelector("#uiContainerUsDocsis31Table");
 const UsDocsis30Table = document.querySelector("#uiContainerUsDocsis30Table");
 
-foo(DsDocsis31Table, RECEIVING_LEVEL);
-foo(DsDocsis30Table, RECEIVING_LEVEL);
-foo(UsDocsis31Table, TRANSMISSION_LEVEL);
-foo(UsDocsis30Table, TRANSMISSION_LEVEL);
+colorizePowerLevel(DsDocsis31Table, RECEIVING_LEVEL);
+colorizePowerLevel(DsDocsis30Table, RECEIVING_LEVEL);
+colorizePowerLevel(UsDocsis31Table, TRANSMISSION_LEVEL);
+colorizePowerLevel(UsDocsis30Table, TRANSMISSION_LEVEL);
