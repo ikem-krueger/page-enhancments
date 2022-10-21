@@ -1,7 +1,7 @@
-const BACKGROUND_COLORS = {
+const COLORS = {
   "Sofortige Beseitigung": "#FF0000",
   "Beseitigung binnen Monatsfrist": "#FFF200",
-  "Tolerierte Abweichung": "#00FF00",
+  "Tolerierte Abweichung": "#ADFF2F",
   "Regel- / Vorgabekonform": "#00FF00"
 }
 
@@ -26,24 +26,34 @@ function inRange(value, range) {
   return min <= value && value <= max;
 }
 
-const DsDocsis30Table = document.querySelector("#uiContainerDsDocsis30Table");
+function foo(bar, baz) {
+  bar.querySelector(".flexTableBody").querySelectorAll(".flexRow").forEach((row) => {
+    const [ kanal, kanalId, typ, frequenz, powerLevel, mse, latenz, korrigierbareFehler, nichtKorrigierbareFehler ] = row.childNodes;
 
-DsDocsis30Table.querySelector(".flexTableBody").querySelectorAll(".flexRow").forEach((row) => {
-  const [ kanal, kanalId, typ, frequenz, powerLevel, mse, latenz, korrigierbareFehler, nichtKorrigierbareFehler ] = row.childNodes;
+    let _powerLevel = parseFloat(powerLevel.textContent);
+    let classification;
+    let backgroundColor;
 
-  let _powerLevel = parseFloat(powerLevel.textContent);
-  let classification;
-  let backgroundColor;
+    baz[typ.textContent].forEach((range, index) => {
+      if(inRange(_powerLevel, range)) {
+        classification = CLASSIFICATION_LEVEL[index];
 
-  RECEIVING_LEVEL[typ.textContent].forEach((range, index) => {
-    if(inRange(_powerLevel, range)) {
-      classification = CLASSIFICATION_LEVEL[index];
+        return;
+      }
+    });
 
-      return;
-    }
+    //console.debug(classification);
+
+    powerLevel.style.color = COLORS[classification];
   });
+}
 
-  console.debug(classification);
+const DsDocsis31Table = document.querySelector("#uiContainerDsDocsis31Table");
+const DsDocsis30Table = document.querySelector("#uiContainerDsDocsis30Table");
+const UsDocsis31Table = document.querySelector("#uiContainerUsDocsis31Table");
+const UsDocsis30Table = document.querySelector("#uiContainerUsDocsis30Table");
 
-  powerLevel.style.color = BACKGROUND_COLORS[classification];
-});
+foo(DsDocsis31Table, RECEIVING_LEVEL);
+foo(DsDocsis30Table, RECEIVING_LEVEL);
+foo(UsDocsis31Table, TRANSMISSION_LEVEL);
+foo(UsDocsis30Table, TRANSMISSION_LEVEL);
