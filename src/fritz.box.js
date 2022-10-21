@@ -1,4 +1,4 @@
-const COLORS = ["#FF0000", "#FFF200", "#ADFF2F", "#00FF00", "#ADFF2F", "#FFF200", "#FF0000"];
+const COLORS = ["#FF0000", "#FFF200", "#80F800", "#00FF00", "#80F800", "#FFF200", "#FF0000"];
 
 const LEVEL = {
   "Empfangsrichtung": {
