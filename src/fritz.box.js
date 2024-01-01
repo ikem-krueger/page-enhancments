@@ -2,28 +2,26 @@
 
 /* Internet > Kabel-Informationen > Kanäle */
 
-NodeList.prototype.findIndex = Array.prototype.findIndex;
+const colors = ["#FF0000", "#FFF200", "#80F800", "#00FF00", "#80F800", "#FFF200", "#FF0000"];
 
-const COLORS = ["#FF0000", "#FFF200", "#80F800", "#00FF00", "#80F800", "#FFF200", "#FF0000"];
-
-const LEVEL = {
+const powerLevelCombined = {
   "Receive": {
-    "64QAM": [[-60.0, -14.0], [-13.9, -12.0], [-11.9, -10.0], [-9.9, 7.0], [7.1, 12.0], [12.1, 14.0], [14.1, 60.0]],
+    "4096QAM": [[-60.0, -2.0], [-1.9, 0.0], [0.1, 2.0], [2.1, 19.0], [19.1, 24.0], [24.1, 26.0], [26.1, 60.0]],
+    "2048QAM": [[-60.0, -4.0], [-3.9, -2.0], [-1.9, 0.0], [0.1, 17.0], [17.1, 22.0], [22.1, 24.0], [24.1, 60.0]],
+    "1024QAM": [[-60.0, -6.0], [-5.9, -4.0], [-3.9, -2.0], [-1.9, 15.0], [15.1, 20.0], [20.1, 22.0], [22.1, 60.0]],
     "256QAM": [[-60.0, -8.0], [-7.9, -6.0], [-5.9, -4.0], [-3.9, 13.0], [13.1, 18.0], [18.1, 20.0], [20.1, 60.0]],
-    "1K": [[-60.0, -6.0], [-5.9, -4.0], [-3.9, -2.0], [-1.9, 15.0], [15.1, 20.0], [20.1, 22.0], [22.1, 60.0]],
-    "2K": [[-60.0, -4.0], [-3.9, -2.0], [-1.9, 0.0], [0.1, 17.0], [17.1, 22.0], [22.1, 24.0], [24.1, 60.0]],
-    "4K": [[-60.0, -2.0], [-1.9, 0.0], [0.1, 2.0], [2.1, 19.0], [19.1, 24.0], [24.1, 26.0], [26.1, 60.0]]
+    "64QAM": [[-60.0, -14.0], [-13.9, -12.0], [-11.9, -10.0], [-9.9, 7.0], [7.1, 12.0], [12.1, 14.0], [14.1, 60.0]]
   }, 
   "Transmit": {
-    "64QAM": [[-60.0, 35.0], [35.1, 37.0], [37.1, 41.0], [41.1, 47.0], [47.1, 51.0], [51.1, 53.0], [53.1, 60.0]],
-    "4K": [[-60.0, 38.0], [38.1, 40.0], [40.1, 44.0], [44.1, 47.0], [47.1, 48.0], [48.1, 50.0], [50.1, 60.0]]
+    "4096QAM": [[-60.0, 38.0], [38.1, 40.0], [40.1, 44.0], [44.1, 47.0], [47.1, 48.0], [48.1, 50.0], [50.1, 60.0]],
+    "64QAM": [[-60.0, 35.0], [35.1, 37.0], [37.1, 41.0], [41.1, 47.0], [47.1, 51.0], [51.1, 53.0], [53.1, 60.0]]
   }
 }
 
-const ALIAS = {
-  "1024QAM": "1K",
-  "2048QAM": "2K",
-  "4096QAM": "4K"
+const alias = {
+  "4K": "4096QAM",
+  "2K": "2048QAM",
+  "1K": "1024QAM"
 }
 
 function isInRange(value, range) {
@@ -32,43 +30,36 @@ function isInRange(value, range) {
   return min <= value && value <= max;
 }
 
-function colorizePowerLevel(table, level) {
-  const columns = table.querySelector(".flexTableHeader").childNodes;
+NodeList.prototype.findIndex = Array.prototype.findIndex;
 
-  let typeIndex = columns.findIndex(column => column.innerText == "Typ");
-  let dbmvIndex = columns.findIndex(column => column.innerText == "Power Level (dBmV)");
+function colorizePowerLevel(table, direction) {
+  const tableObject = document.querySelector(table);
 
-  table.querySelector(".flexTableBody").querySelectorAll(".flexRow").forEach((row) => {
+  const headerColumns = tableObject.querySelector(".flexTableHeader").childNodes;
+
+  let typeIndex = headerColumns.findIndex(column => column.textContent == "Typ");
+  let powerLevelIndex = headerColumns.findIndex(column => column.textContent == "Power Level (dBmV)");
+
+  tableObject.querySelector(".flexTableBody").querySelectorAll(".flexRow").forEach((row) => {
     const columns = row.childNodes;
 
-    let type = columns[typeIndex];
+    const type = columns[typeIndex].textContent;
 
-    if(Object.keys(ALIAS).includes(type)) {
-      type = ALIAS[type];
-    }
+    const powerLevelObject = columns[powerLevelIndex];
 
-    const powerLevel = columns[dbmvIndex];
+    const powerLevel = powerLevelCombined[direction][type] || powerLevelCombined[direction][alias[type]];
 
-    let color;
-
-    level[type.textContent].forEach((range, index) => {
-      if(isInRange(parseFloat(powerLevel.textContent), range)) {
-        color = COLORS[index];
+    powerLevel.forEach((range, index) => {
+      if(isInRange(parseFloat(powerLevelObject.textContent), range)) {
+        powerLevelObject.style.color = colors[index];
 
         return;
       }
     });
-
-    powerLevel.style.color = color;
   });
 }
 
-const dsDocsis31Table = document.querySelector("#uiContainerDsDocsis31Table");
-const dsDocsis30Table = document.querySelector("#uiContainerDsDocsis30Table");
-const usDocsis31Table = document.querySelector("#uiContainerUsDocsis31Table");
-const usDocsis30Table = document.querySelector("#uiContainerUsDocsis30Table");
-
-colorizePowerLevel(dsDocsis31Table, LEVEL["Receive"]);
-colorizePowerLevel(dsDocsis30Table, LEVEL["Receive"]);
-colorizePowerLevel(usDocsis31Table, LEVEL["Transmit"]);
-colorizePowerLevel(usDocsis30Table, LEVEL["Transmit"]);
+colorizePowerLevel("#uiContainerDsDocsis31Table", "Receive");
+colorizePowerLevel("#uiContainerDsDocsis30Table", "Receive");
+colorizePowerLevel("#uiContainerUsDocsis31Table", "Transmit");
+colorizePowerLevel("#uiContainerUsDocsis30Table", "Transmit");
