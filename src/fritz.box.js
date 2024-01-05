@@ -51,8 +51,6 @@ function colorizePowerLevel(table, direction) {
       powerLevel.forEach((range, index) => {
         if(isInRange(parseFloat(powerLevelObject.textContent), range)) {
           powerLevelObject.style.color = powerLevelCombined["colors"][index];
-
-          return;
         }
       });
     }
