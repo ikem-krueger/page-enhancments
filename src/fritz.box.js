@@ -35,7 +35,7 @@ function colorizePowerLevel(table, direction) {
 
   const headerColumns = tableObject.querySelector(".flexTableHeader").childNodes;
 
-  const typeIndex = headerColumns.findIndex(column => column.textContent == "Typ");
+  const typeIndex = headerColumns.findIndex(column => column.textContent == "Typ" || column.textContent == "Modulation");
   const powerLevelIndex = headerColumns.findIndex(column => column.textContent == "Power Level (dBmV)");
 
   tableObject.querySelector(".flexTableBody").querySelectorAll(".flexRow").forEach((row) => {
