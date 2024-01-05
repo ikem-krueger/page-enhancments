@@ -47,13 +47,15 @@ function colorizePowerLevel(table, direction) {
 
     const powerLevel = powerLevelCombined[direction][type] || powerLevelCombined[direction][powerLevelCombined["alias"][type]];
 
-    powerLevel.forEach((range, index) => {
-      if(isInRange(parseFloat(powerLevelObject.textContent), range)) {
-        powerLevelObject.style.color = powerLevelCombined["colors"][index];
+    if(powerLevel) {
+      powerLevel.forEach((range, index) => {
+        if(isInRange(parseFloat(powerLevelObject.textContent), range)) {
+          powerLevelObject.style.color = powerLevelCombined["colors"][index];
 
-        return;
-      }
-    });
+          return;
+        }
+      });
+    }
   });
 }
 
